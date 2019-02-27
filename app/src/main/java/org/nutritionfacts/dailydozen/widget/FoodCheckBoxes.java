@@ -1,6 +1,9 @@
 package org.nutritionfacts.dailydozen.widget;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -30,6 +33,8 @@ public class FoodCheckBoxes extends LinearLayout {
     private Food food;
     private Day day;
 
+    private boolean darkModeSetting = false;
+
     public FoodCheckBoxes(Context context) {
         this(context, null);
     }
@@ -46,6 +51,10 @@ public class FoodCheckBoxes extends LinearLayout {
     private void init(Context context) {
         inflate(context, R.layout.food_check_boxes, this);
         ButterKnife.bind(this);
+
+        // Get dark mode in shared preferences
+        SharedPreferences prefs = context.getSharedPreferences("darkModePrefs", context.MODE_PRIVATE);
+        darkModeSetting = prefs.getBoolean("darkMode", false);
     }
 
     public void setDay(Day day) {
@@ -70,8 +79,30 @@ public class FoodCheckBoxes extends LinearLayout {
         }
     }
 
+    private static void setCheckBoxColor(ServingCheckBox checkBox, int uncheckedColor, int checkedColor) {
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][] {
+                        new int[] { -android.R.attr.state_checked }, // unchecked
+                        new int[] {  android.R.attr.state_checked }  // checked
+                },
+                new int[] {
+                        uncheckedColor,
+                        checkedColor
+                }
+        );
+
+        CompoundButtonCompat.setButtonTintList(checkBox, colorStateList);
+    }
+
     private ServingCheckBox createCheckBox(List<ServingCheckBox> checkBoxes, Integer currentServings, Integer maxServings) {
         final ServingCheckBox checkBox = new ServingCheckBox(getContext());
+
+        // Check for dark mode
+        if (darkModeSetting) {
+            int grey = getResources().getColor(R.color.gray_light);
+            setCheckBoxColor(checkBox, grey, grey);
+        }
+
         checkBox.setChecked(currentServings > 0);
         checkBox.setOnCheckedChangeListener(getOnCheckedChangeListener(checkBox));
         if (maxServings > 1)

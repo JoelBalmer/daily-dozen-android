@@ -3,6 +3,7 @@ package org.nutritionfacts.dailydozen.activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean alreadyHandledRestoreIntent;
 
+    private boolean darkModeSetting = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,12 @@ public class MainActivity extends AppCompatActivity {
         calculateStreaksAfterDatabaseUpgradeToV2();
 
         handleIntentIfNecessary();
+
+        // Get dark mode in shared preferences
+        SharedPreferences prefs = getSharedPreferences("darkModePrefs", MODE_PRIVATE);
+        darkModeSetting = prefs.getBoolean("darkMode", false);
     }
+
 
     private void handleIntentIfNecessary() {
         final Intent intent = getIntent();
@@ -167,6 +175,10 @@ public class MainActivity extends AppCompatActivity {
         // Only show the debug menu option if the apk is a debug build
         menu.findItem(R.id.menu_debug).setVisible(BuildConfig.DEBUG);
 
+        if (darkModeSetting) {
+            menu.findItem(R.id.menu_dark_mode).setTitle("Light mode");
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -200,6 +212,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_debug:
                 startActivityForResult(new Intent(this, DebugActivity.class), Args.DEBUG_SETTINGS_REQUEST);
                 return true;
+            case R.id.menu_dark_mode:
+
+                // Set the opposite in shared preferences
+                SharedPreferences.Editor editor = getSharedPreferences("darkModePrefs", MODE_PRIVATE).edit();
+                editor.putBoolean("darkMode", !darkModeSetting);
+                editor.commit();
+
+                // Restart activity
+                finish();
+                startActivity(getIntent());
+
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

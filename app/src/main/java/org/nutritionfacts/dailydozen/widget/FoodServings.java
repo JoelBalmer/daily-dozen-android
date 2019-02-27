@@ -1,6 +1,7 @@
 package org.nutritionfacts.dailydozen.widget;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,18 @@ public class FoodServings extends LinearLayout {
     }
 
     private void init(final Context context) {
-        final View view = LayoutInflater.from(context).inflate(R.layout.food_servings, this);
+        View view = null;
+
+        // Check for dark mode
+        SharedPreferences prefs = context.getSharedPreferences("darkModePrefs", context.MODE_PRIVATE);
+        boolean restoredSetting = prefs.getBoolean("darkMode", false);
+        if (restoredSetting) {
+            view = LayoutInflater.from(context).inflate(R.layout.food_servings_dark, this);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.food_servings, this);
+        }
+
+        // Finish setting view
         ButterKnife.bind(this, view);
     }
 

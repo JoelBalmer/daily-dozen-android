@@ -103,6 +103,7 @@ public class FoodInfoActivity extends FoodLoadingActivity {
     private void initFoodTypes(String foodName) {
         final List<String> foods = FoodInfo.getTypesOfFood(foodName);
         final List<String> videos = FoodInfo.getFoodVideosLink(foodName);
+
         final RecyclerView.Adapter adapter = new FoodTypeAdapter(foods, videos);
 
         initList(lvFoodTypes, adapter);
