@@ -3,6 +3,7 @@
     <color name="colorPrimaryDark">#388E3C</color>
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorAccent">#FF5252</color>
+
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
     <color name="colorDividerColor">#B6B6B6</color>
@@ -19,4 +20,10 @@
     <color name="silver">#C0C0C0</color>
     <color name="bronze">#8C7853</color>
     <color name="brown">#A52A2A</color>
+
+    <color name="colorPrimaryDark_DarkTheme">#000000</color>
+    <color name="colorPrimary_DarkTheme">#2b2b2b</color>
+    <color name="colorAccent_DarkTheme">#ffffff</color>
+    <color name="itemBackground_DarkTheme">#2b2b2b</color>
+    <color name="colorPrimaryText_DarkTheme">#ffffff</color>
 </resources>
