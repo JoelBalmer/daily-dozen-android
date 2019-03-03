@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Get dark mode in shared preferences
+        SharedPreferences prefs = getSharedPreferences("darkModePrefs", MODE_PRIVATE);
+        darkModeSetting = prefs.getBoolean("darkMode", false);
+        if (darkModeSetting) {
+            setTheme(R.style.AppThemeDark);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -76,10 +83,6 @@ public class MainActivity extends AppCompatActivity {
         calculateStreaksAfterDatabaseUpgradeToV2();
 
         handleIntentIfNecessary();
-
-        // Get dark mode in shared preferences
-        SharedPreferences prefs = getSharedPreferences("darkModePrefs", MODE_PRIVATE);
-        darkModeSetting = prefs.getBoolean("darkMode", false);
     }
 
 
@@ -177,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (darkModeSetting) {
             menu.findItem(R.id.menu_dark_mode).setTitle("Light mode");
+
         }
 
         return super.onCreateOptionsMenu(menu);
