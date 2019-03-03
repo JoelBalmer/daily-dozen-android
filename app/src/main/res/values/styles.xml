@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize normal theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -10,7 +10,7 @@
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize dark theme here. -->
         <item name="colorPrimary">@color/colorPrimary_DarkTheme</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_DarkTheme</item>
         <item name="colorAccent">@color/colorAccent_DarkTheme</item>

@@ -26,4 +26,5 @@
     <color name="colorAccent_DarkTheme">#ffffff</color>
     <color name="itemBackground_DarkTheme">#2b2b2b</color>
     <color name="colorPrimaryText_DarkTheme">#ffffff</color>
+    <color name="colorSecondaryText_DarkTheme">#727272</color>
 </resources>
