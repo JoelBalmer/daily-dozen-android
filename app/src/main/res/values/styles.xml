@@ -6,6 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_DarkTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_DarkTheme</item>
+        <item name="colorAccent">@color/colorAccent_DarkTheme</item>
+
+        <item name="android:itemBackground">@color/itemBackground_DarkTheme</item>
+        <item name="android:textColor">@color/colorPrimaryText_DarkTheme</item>
     </style>
 
     <style name="Widget.CardContent" parent="android:Widget">
