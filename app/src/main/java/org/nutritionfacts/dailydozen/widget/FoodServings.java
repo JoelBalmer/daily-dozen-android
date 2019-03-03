@@ -1,7 +1,6 @@
 package org.nutritionfacts.dailydozen.widget;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import org.nutritionfacts.dailydozen.model.Day;
 import org.nutritionfacts.dailydozen.model.Food;
 import org.nutritionfacts.dailydozen.model.FoodInfo;
 import org.nutritionfacts.dailydozen.model.Servings;
+import org.nutritionfacts.dailydozen.util.DarkViewUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,16 +51,8 @@ public class FoodServings extends LinearLayout {
     }
 
     private void init(final Context context) {
-        View view = null;
-
-        // Check for dark mode
-        SharedPreferences prefs = context.getSharedPreferences("darkModePrefs", context.MODE_PRIVATE);
-        boolean restoredSetting = prefs.getBoolean("darkMode", false);
-        if (restoredSetting) {
-            view = LayoutInflater.from(context).inflate(R.layout.food_servings_dark, this);
-        } else {
-            view = LayoutInflater.from(context).inflate(R.layout.food_servings, this);
-        }
+        int layoutId = DarkViewUtil.inflateLinearLayoutView(context, "food_servings");
+        View view = LayoutInflater.from(context).inflate(layoutId, this);
 
         // Finish setting view
         ButterKnife.bind(this, view);
