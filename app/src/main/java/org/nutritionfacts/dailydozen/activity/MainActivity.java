@@ -3,7 +3,6 @@ package org.nutritionfacts.dailydozen.activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +35,7 @@ import org.nutritionfacts.dailydozen.model.Servings;
 import org.nutritionfacts.dailydozen.task.BackupTask;
 import org.nutritionfacts.dailydozen.task.CalculateStreaksTask;
 import org.nutritionfacts.dailydozen.task.RestoreTask;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 import org.nutritionfacts.dailydozen.util.DateUtil;
 import org.nutritionfacts.dailydozen.util.NotificationUtil;
 
@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Get dark mode in shared preferences
-        SharedPreferences prefs = getSharedPreferences("darkModePrefs", MODE_PRIVATE);
-        darkModeSetting = prefs.getBoolean("darkMode", false);
-        if (darkModeSetting) {
+
+        // Check for dark mode
+        final boolean darkModeEnabled = DarkModeUtil.getDarkMode(getApplicationContext());
+        if (darkModeEnabled) {
             setTheme(R.style.AppThemeDark);
         }
 
@@ -218,12 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_dark_mode:
 
-                // Set the opposite in shared preferences
-                SharedPreferences.Editor editor = getSharedPreferences("darkModePrefs", MODE_PRIVATE).edit();
-                editor.putBoolean("darkMode", !darkModeSetting);
-                editor.commit();
-
-                // Restart activity
+                DarkModeUtil.setDarkMode(getApplicationContext());
                 finish();
                 startActivity(getIntent());
 

@@ -1,6 +1,5 @@
 package org.nutritionfacts.dailydozen.activity;
 
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -20,6 +19,7 @@ import org.nutritionfacts.dailydozen.R;
 import org.nutritionfacts.dailydozen.model.Day;
 import org.nutritionfacts.dailydozen.model.Food;
 import org.nutritionfacts.dailydozen.model.Servings;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 import org.nutritionfacts.dailydozen.util.DateUtil;
 
 import java.util.Calendar;
@@ -46,14 +46,9 @@ public class FoodHistoryActivity extends FoodLoadingActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get dark mode in shared preferences
-        SharedPreferences prefs = getSharedPreferences("darkModePrefs", MODE_PRIVATE);
-        final boolean darkModeSetting = prefs.getBoolean("darkMode", false);
-        if (darkModeSetting) {
-            setContentView(R.layout.activity_food_history_dark);
-        } else {
-            setContentView(R.layout.activity_food_history);
-        }
+        // Check for dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getApplicationContext(), "activity_food_history");
+        setContentView(layoutId);
 
         ButterKnife.bind(this);
 

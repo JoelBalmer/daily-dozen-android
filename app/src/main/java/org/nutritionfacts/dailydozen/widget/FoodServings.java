@@ -3,7 +3,6 @@ package org.nutritionfacts.dailydozen.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import org.nutritionfacts.dailydozen.model.Day;
 import org.nutritionfacts.dailydozen.model.Food;
 import org.nutritionfacts.dailydozen.model.FoodInfo;
 import org.nutritionfacts.dailydozen.model.Servings;
-import org.nutritionfacts.dailydozen.util.DarkViewUtil;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,11 +50,12 @@ public class FoodServings extends LinearLayout {
     }
 
     private void init(final Context context) {
-        int layoutId = DarkViewUtil.inflateLinearLayoutView(context, "food_servings");
-        View view = LayoutInflater.from(context).inflate(layoutId, this);
+
+        // Check for dark mode
+        int layoutId = DarkModeUtil.getLayoutId(context, "food_servings");
 
         // Finish setting view
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, LayoutInflater.from(context).inflate(layoutId, this));
     }
 
     public boolean setDateAndFood(final Day day, final Food food) {

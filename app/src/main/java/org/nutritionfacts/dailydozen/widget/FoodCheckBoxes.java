@@ -1,7 +1,6 @@
 package org.nutritionfacts.dailydozen.widget;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.util.AttributeSet;
@@ -16,6 +15,8 @@ import org.nutritionfacts.dailydozen.model.Servings;
 import org.nutritionfacts.dailydozen.task.CalculateStreakTask;
 import org.nutritionfacts.dailydozen.task.StreakTaskInput;
 import org.nutritionfacts.dailydozen.view.ServingCheckBox;
+
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,6 @@ public class FoodCheckBoxes extends LinearLayout {
     private Food food;
     private Day day;
 
-    private boolean darkModeSetting = false;
-
     public FoodCheckBoxes(Context context) {
         this(context, null);
     }
@@ -51,10 +50,6 @@ public class FoodCheckBoxes extends LinearLayout {
     private void init(Context context) {
         inflate(context, R.layout.food_check_boxes, this);
         ButterKnife.bind(this);
-
-        // Get dark mode in shared preferences
-        SharedPreferences prefs = context.getSharedPreferences("darkModePrefs", context.MODE_PRIVATE);
-        darkModeSetting = prefs.getBoolean("darkMode", false);
     }
 
     public void setDay(Day day) {
@@ -97,17 +92,19 @@ public class FoodCheckBoxes extends LinearLayout {
     private ServingCheckBox createCheckBox(List<ServingCheckBox> checkBoxes, Integer currentServings, Integer maxServings) {
         final ServingCheckBox checkBox = new ServingCheckBox(getContext());
 
-        // Check for dark mode
-        if (darkModeSetting) {
-            int grey = getResources().getColor(R.color.gray_light);
-            setCheckBoxColor(checkBox, grey, grey);
-        }
-
         checkBox.setChecked(currentServings > 0);
         checkBox.setOnCheckedChangeListener(getOnCheckedChangeListener(checkBox));
         if (maxServings > 1)
             checkBox.setNextServing(createCheckBox(checkBoxes, --currentServings, --maxServings));
         checkBoxes.add(checkBox);
+
+        // Check for dark mode
+        final boolean darkModeEnabled = DarkModeUtil.getDarkMode(getContext());
+        if (darkModeEnabled) {
+            int grey = getResources().getColor(R.color.gray_light);
+            setCheckBoxColor(checkBox, grey, grey);
+        }
+
         return checkBox;
     }
 
