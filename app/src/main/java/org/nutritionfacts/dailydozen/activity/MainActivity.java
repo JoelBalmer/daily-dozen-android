@@ -62,14 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean alreadyHandledRestoreIntent;
 
-    private boolean darkModeSetting = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // Check for dark mode
-        final boolean darkModeEnabled = DarkModeUtil.getDarkMode(getApplicationContext());
-        if (darkModeEnabled) {
+        if (darkModeEnabled()) {
             setTheme(R.style.AppThemeDark);
         }
 
@@ -178,9 +174,9 @@ public class MainActivity extends AppCompatActivity {
         // Only show the debug menu option if the apk is a debug build
         menu.findItem(R.id.menu_debug).setVisible(BuildConfig.DEBUG);
 
-        if (darkModeSetting) {
+        // Check for dark mode
+        if (darkModeEnabled()) {
             menu.findItem(R.id.menu_dark_mode).setTitle("Light mode");
-
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -416,5 +412,9 @@ public class MainActivity extends AppCompatActivity {
             Timber.d("Changing displayed date to " + dateTime.toString());
             datePager.setCurrentItem(Day.getNumDaysSinceEpoch(dateTime));
         }
+    }
+
+    private boolean darkModeEnabled() {
+        return DarkModeUtil.getDarkMode(getApplicationContext());
     }
 }
