@@ -64,13 +64,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Check for dark mode
+        // Check theme for dark mode
         if (darkModeEnabled()) {
             setTheme(R.style.AppThemeDark);
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        // Check layout for dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getApplicationContext(), "activity_main");
+        setContentView(layoutId);
+
         ButterKnife.bind(this);
 
         initDatePager();
@@ -254,9 +258,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDatePagerIndicator() {
         datePagerIndicator.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-        datePagerIndicator.setBackgroundResource(R.color.colorPrimary);
-        datePagerIndicator.setTabIndicatorColorResource(R.color.colorAccent);
-        datePagerIndicator.setDrawFullUnderline(false);
+
+        if (darkModeEnabled()) {
+            datePagerIndicator.setBackgroundResource(R.color.colorPrimary_DarkTheme);
+            datePagerIndicator.setTabIndicatorColorResource(R.color.colorAccent_DarkTheme);
+            datePagerIndicator.setDrawFullUnderline(false);
+        }
+        else {
+            datePagerIndicator.setBackgroundResource(R.color.colorPrimary);
+            datePagerIndicator.setTabIndicatorColorResource(R.color.colorAccent);
+            datePagerIndicator.setDrawFullUnderline(false);
+        }
     }
 
     @Override
