@@ -72,6 +72,14 @@ public class FoodHistoryActivity extends FoodLoadingActivity {
 
         caldroid = CaldroidFragment.newInstance("", DateUtil.getCurrentMonthOneBased(), DateUtil.getCurrentYear());
 
+        // Check dark mode
+        if (DarkModeUtil.getDarkMode(getApplicationContext())) {
+            Bundle args = new Bundle();
+            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+            caldroid.setArguments(args);
+        }
+
+
         caldroid.setCaldroidListener(new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
