@@ -96,4 +96,11 @@
 
     <style name="CaldroidDefaultDarkSquareCell" parent="CaldroidDefaultDarkCell" />
 
+
+    <!-- SwitchCompat dark -->
+    <style name="SwitchCompatDark" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/caldroid_white</item>
+        <item name="colorSwitchThumbNormal">@color/caldroid_white</item>
+    </style>
+
 </resources>
