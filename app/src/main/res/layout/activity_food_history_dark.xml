@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark_DarkTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +20,7 @@
                 style="@style/Widget.CardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary_DarkTheme"
                 android:orientation="vertical">
 
                 <TextView
@@ -26,7 +28,8 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
                     android:text="@string/history"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/colorPrimaryText_DarkTheme" />
 
                 <LinearLayout
                     android:id="@+id/calendar_fragment_container"
@@ -52,7 +55,8 @@
                         android:drawableStart="@drawable/legend_icon_less_than_recommended_servings"
                         android:drawableLeft="@drawable/legend_icon_less_than_recommended_servings"
                         android:drawablePadding="5dp"
-                        android:text="@string/servings_some" />
+                        android:text="@string/servings_some"
+                        android:textColor="@color/colorPrimaryText_DarkTheme" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -61,7 +65,8 @@
                         android:drawableStart="@drawable/legend_icon_recommended_servings"
                         android:drawableLeft="@drawable/legend_icon_recommended_servings"
                         android:drawablePadding="5dp"
-                        android:text="@string/servings_all" />
+                        android:text="@string/servings_all"
+                        android:textColor="@color/colorPrimaryText_DarkTheme" />
 
                 </LinearLayout>
 

@@ -35,6 +35,7 @@ import org.nutritionfacts.dailydozen.model.Servings;
 import org.nutritionfacts.dailydozen.task.BackupTask;
 import org.nutritionfacts.dailydozen.task.CalculateStreaksTask;
 import org.nutritionfacts.dailydozen.task.RestoreTask;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 import org.nutritionfacts.dailydozen.util.DateUtil;
 import org.nutritionfacts.dailydozen.util.NotificationUtil;
 
@@ -63,8 +64,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Check theme for dark mode
+        if (darkModeEnabled()) {
+            setTheme(R.style.AppThemeDark);
+        }
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        // Check layout for dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getApplicationContext(), "activity_main");
+        setContentView(layoutId);
+
         ButterKnife.bind(this);
 
         initDatePager();
@@ -74,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         handleIntentIfNecessary();
     }
+
 
     private void handleIntentIfNecessary() {
         final Intent intent = getIntent();
@@ -167,6 +178,11 @@ public class MainActivity extends AppCompatActivity {
         // Only show the debug menu option if the apk is a debug build
         menu.findItem(R.id.menu_debug).setVisible(BuildConfig.DEBUG);
 
+        // Check for dark mode
+        if (darkModeEnabled()) {
+            menu.findItem(R.id.menu_dark_mode).setTitle("Light mode");
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -200,6 +216,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_debug:
                 startActivityForResult(new Intent(this, DebugActivity.class), Args.DEBUG_SETTINGS_REQUEST);
                 return true;
+            case R.id.menu_dark_mode:
+
+                DarkModeUtil.setDarkMode(getApplicationContext());
+                finish();
+                startActivity(getIntent());
+
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -234,9 +258,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDatePagerIndicator() {
         datePagerIndicator.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-        datePagerIndicator.setBackgroundResource(R.color.colorPrimary);
-        datePagerIndicator.setTabIndicatorColorResource(R.color.colorAccent);
-        datePagerIndicator.setDrawFullUnderline(false);
+
+        if (darkModeEnabled()) {
+            datePagerIndicator.setBackgroundResource(R.color.colorPrimary_DarkTheme);
+            datePagerIndicator.setTabIndicatorColorResource(R.color.colorAccent_DarkTheme);
+            datePagerIndicator.setDrawFullUnderline(false);
+        }
+        else {
+            datePagerIndicator.setBackgroundResource(R.color.colorPrimary);
+            datePagerIndicator.setTabIndicatorColorResource(R.color.colorAccent);
+            datePagerIndicator.setDrawFullUnderline(false);
+        }
     }
 
     @Override
@@ -392,5 +424,9 @@ public class MainActivity extends AppCompatActivity {
             Timber.d("Changing displayed date to " + dateTime.toString());
             datePager.setCurrentItem(Day.getNumDaysSinceEpoch(dateTime));
         }
+    }
+
+    private boolean darkModeEnabled() {
+        return DarkModeUtil.getDarkMode(getApplicationContext());
     }
 }

@@ -891,4 +891,10 @@
         <item>white-tea</item>
     </string-array>
 
+    <!--
+    NOTE: Dark mode strings
+    -->
+    <string name="icon_chart_dark" translatable="false">{fa-bar-chart 20dp @color/colorPrimaryText_DarkTheme}</string>
+
+
 </resources>

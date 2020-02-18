@@ -13,6 +13,7 @@ import android.widget.TimePicker;
 import org.nutritionfacts.dailydozen.R;
 import org.nutritionfacts.dailydozen.controller.Prefs;
 import org.nutritionfacts.dailydozen.model.pref.UpdateReminderPref;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 import org.nutritionfacts.dailydozen.util.NotificationUtil;
 
 import butterknife.BindView;
@@ -39,7 +40,11 @@ public class DailyReminderSettingsActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification_settings);
+
+        // Check dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getApplicationContext(), "activity_notification_settings");
+        setContentView(layoutId);
+
         ButterKnife.bind(this);
         init();
     }

@@ -10,6 +10,7 @@ import org.nutritionfacts.dailydozen.Common;
 import org.nutritionfacts.dailydozen.R;
 import org.nutritionfacts.dailydozen.controller.Bus;
 import org.nutritionfacts.dailydozen.model.Servings;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,10 @@ public class DateServings extends LinearLayout {
     }
 
     private void init(final Context context) {
-        final View view = inflate(context, R.layout.date_servings, this);
+        // Check for dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getContext(), "date_servings");
+        final View view = inflate(context, layoutId, this);
+
         ButterKnife.bind(this, view);
 
         tvHeader.setText(context.getString(R.string.servings));

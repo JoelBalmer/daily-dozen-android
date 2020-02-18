@@ -23,6 +23,7 @@ import org.nutritionfacts.dailydozen.exception.InvalidDateException;
 import org.nutritionfacts.dailydozen.model.Day;
 import org.nutritionfacts.dailydozen.model.Food;
 import org.nutritionfacts.dailydozen.model.Servings;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 import org.nutritionfacts.dailydozen.widget.DateServings;
 import org.nutritionfacts.dailydozen.widget.FoodServings;
 import org.nutritionfacts.dailydozen.widget.VitaminDivider;
@@ -62,7 +63,9 @@ public class DateFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_date, container, false);
+        // Check dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getContext(),"fragment_date");
+        return inflater.inflate(layoutId, container, false);
     }
 
     @Override

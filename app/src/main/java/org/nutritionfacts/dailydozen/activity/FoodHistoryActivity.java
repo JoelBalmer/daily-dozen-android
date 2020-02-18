@@ -19,6 +19,7 @@ import org.nutritionfacts.dailydozen.R;
 import org.nutritionfacts.dailydozen.model.Day;
 import org.nutritionfacts.dailydozen.model.Food;
 import org.nutritionfacts.dailydozen.model.Servings;
+import org.nutritionfacts.dailydozen.util.DarkModeUtil;
 import org.nutritionfacts.dailydozen.util.DateUtil;
 
 import java.util.Calendar;
@@ -44,7 +45,11 @@ public class FoodHistoryActivity extends FoodLoadingActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_history);
+
+        // Check for dark mode
+        final int layoutId = DarkModeUtil.getLayoutId(getApplicationContext(), "activity_food_history");
+        setContentView(layoutId);
+
         ButterKnife.bind(this);
 
         datesWithEvents = new ArrayMap<>();
@@ -66,6 +71,14 @@ public class FoodHistoryActivity extends FoodLoadingActivity {
         datesWithEvents = new ArrayMap<>();
 
         caldroid = CaldroidFragment.newInstance("", DateUtil.getCurrentMonthOneBased(), DateUtil.getCurrentYear());
+
+        // Check dark mode
+        if (DarkModeUtil.getDarkMode(getApplicationContext())) {
+            Bundle args = new Bundle();
+            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+            caldroid.setArguments(args);
+        }
+
 
         caldroid.setCaldroidListener(new CaldroidListener() {
             @Override
